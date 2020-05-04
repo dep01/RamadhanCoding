@@ -5,13 +5,18 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
+    @if ($message = Session::get('success'))
+        <div class="alert alert-primary" role="alert">
+            {{ $message }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Kategori</h3>
                     </div>
-                    <form action="" method="POST" role="form">
+                    <form action="{{route('KategoriStore')}}" method="POST" role="form">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -45,7 +50,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                    @forelse ($kategori as $row)
+                                    <tr>
+                                    <td>{{ $loop->iteration}}</td>
+                                    <td>{{ $row->nama_kategori}}</td>
+                                    <td>{{ $row->created_at}}</td>
+                                    <td>
+                                    <form action="{{route('KategoriDelete',$row->id_kategori)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')   
+                                        <button class="badge badge-danger" type="submit">Hapus</button>
+                                    </form>
+                                    </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4">
+                                            Tidak Ada Data
+                                        </td>
+                                    </tr>
+                                    @endforelse
                             </tbody>
                         </table>
                     </div>

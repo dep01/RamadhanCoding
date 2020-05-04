@@ -4,6 +4,11 @@
 @endsection
 @section('content')
 <section class="content">
+    @if ($message = Session::get('success'))
+    <div class="alert alert-primary" role="alert">
+        {{ $message }}
+    </div>
+    @endif
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">
@@ -20,11 +25,39 @@
             <table id="example1" class="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
-
+                        <th>No</th>
+                        <th>Nama Produk</th>
+                        <th>Kategori</th>
+                        <th>Harga</th>
+                        <th>Qty</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    @forelse ($produk as $row)
+                    <tr>
+                    <td>{{ $loop->iteration}}</td>
+                    <td>{{ $row->nama_produk}}</td>
+                    <td>{{ $row->kategori->nama_kategori}}</td>
+                    <td>{{ $row->harga}}</td>
+                    <td>{{ $row->qty}}</td>
+                    <td>
+                        
+                    <form action="{{route('ProdukDelete',$row->id_produk)}}" method="post">
+                        @csrf
+                        @method('DELETE')   
+                    <a href="{{route('ProdukEdit',$row->id_produk)}}" class="badge badge-dark">Update</a>
+                        <button class="badge badge-secondary" type="submit">Hapus</button>
+                    </form>
+                    </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4">
+                            Tidak Ada Data
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
