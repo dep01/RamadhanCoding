@@ -40,7 +40,7 @@
                             </div>
                             <div class="form group">
                                 <label for="harga_produk">Harga Produk</label>
-                                <input type="numeric" name="harga_produk"
+                                <input type="number" name="harga_produk"
                                     class="form-control {{ $errors->has('harga_produk') ? 'is-invalid':'' }}"
                                     id="harga_produk">
                                 <div class="invalid-feedback">
